@@ -1,3 +1,28 @@
+3/13 강의 요약
+=================
+Node의 장단점
+----------------
+
+>장점
+>   >1. 비동기 논 블로킹 I/O로 높은 성능 제공
+>   >2. JS 풀스택 개발이 가능해 생산성이 향상됨
+>   >3. NPM(Node Package Manager) 사용가능
+>   >4. 경량 서버 개발에 최적화 됨
+>   >5. 실시간 데이터 처리가 강력함
+
+* * *
+
+>단점
+>   >1. CPU집약 적인 작업에 부적합함 : 싱글 스레드 기반이라 멀티스레딩이 안됨
+>   >2. 콜백 지옥문제
+>   >3. 보안 취약점 존재
+
+* * *
+React 역사
+------------------
+JS UI라이브러리를 표방하여 13/05/29에 공개
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
