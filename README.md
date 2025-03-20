@@ -4,20 +4,20 @@
 ## 수강 내용
 ### React 초기 모듈 설명
 >node_modules/
->>초기 node module 및 새로 설치하는 패키지가 저장이됨
->>초기 파일 : 37,352 / 폴더 : 4,597 / 용량 : 200mb 엄청난 양이 존재함
->> git으로 관리하지 않아서 폴더명이 흐릿하게 됨
->public
->>정적 파일을 저장하는 dir
->>build후 배포할 HTML, CSS, JS등이 보관된곳
->>특별히 수정할 필요 없음
->>index.html : React앱이 마운트 되는 html파일
->>src : React 주요코드가 위치하는 dir
->>대부분 여기서 작업을 하게 됨
->>>src/App.js : 메인 component로 필요한 sub component를 모아서 관리함
->>>src/App.css : App.js의 css
->>>src/index.js : React앱의 진입 점으로 최종렌더링이 되는곳
->>>ReactDOM.createRoot를 사용해 App.js를 렌더링함
+>>초기 node module 및 새로 설치하는 패키지가 저장이됨<br>
+>>초기 파일 : 37,352 / 폴더 : 4,597 / 용량 : 200mb 엄청난 양이 존재함<br>
+>> git으로 관리하지 않아서 폴더명이 흐릿하게 됨<br>
+>public<br>
+>>정적 파일을 저장하는 dir<br>
+>>build후 배포할 HTML, CSS, JS등이 보관된곳<br>
+>>특별히 수정할 필요 없음<br>
+>>index.html : React앱이 마운트 되는 html파일<br>
+>>src : React 주요코드가 위치하는 dir<br>
+>>대부분 여기서 작업을 하게 됨<br>
+>>>src/App.js : 메인 component로 필요한 sub component를 모아서 관리함<br>
+>>>src/App.css : App.js의 css<br>
+>>>src/index.js : React앱의 진입 점으로 최종렌더링이 되는곳<br>
+>>>ReactDOM.createRoot를 사용해 App.js를 렌더링함<br>
 
 * * *
 
