@@ -1,5 +1,52 @@
 # 함준우 202130334
 
+# 3월 27일 4주차 수업내용
+## 수강내용
+### Component의 생성 및 nesting(중첩)
+* export default 키워드는 파일내의 component 중 기본 component를 지정하는 문법
+* 이 키워드도 js문법임
+
+> export default 와 export의 차이
+> * named export (export)
+>> * 하나의 파일안에 여러개의 compoent가 있을때 사용
+
+> * export default
+>> * 하나의 파일안에서 하나의 component 만 내보내는 경우 사용
+
+### JSX 마크업
+
+* 앞에서 작성한 코드의 마크업 문법을 JSX라고함
+* 반드시 사용해야 하는것은 아니나 편의성을 위하여 많이 사용함
+* JSX는 HTML보다 엄격한 문법을 적용함
+* JSX에서는 br같은 싱글태그에서도 태그를 닫아줘야함
+* react에서는 여러개의 컴포넌트를 JSX태그로 반환될수 있음
+* 다만 여러개의 componnent를 <pre><div></div><></></pre> 으로 rapping 해줘야함
+
+### Style 구문
+* React에서는 className이라는 키워드로 class를 정의한다
+* className은 html의 class와 동일한 방식으로 작동함
+* css는 별도의 css 파일에 작성을함 react는 css파일을 추가하는것을 규정하지는 않는다
+* 가장 간단한 방법은 html에 link태그를 추가하는 것이 한 방법이다
+> 그러나 link를 추가하면 정적 페이지를 수정해야 하기 때문에 추천하지 않음
+* 만일 빌드 도구나 프레임워크를 사용한다면 해당문서를 참고해 프로젝트에 css파일을 추가한다
+
+### 데이터 표시
+* JSX를 사용하면 JS내부에 마크업을 넣을수 있다
+* JSX코드 내에서 JS로 탈출하여 변수나 표현식을 사용하는것이다
+* 이방법을 ESCAPE BACK이라고 함
+* {}를 사용하여 변수나 표현식을 사용자에게 표시하는 방법
+<pre>
+    return(
+        < img 
+            className="avator"
+            src={user.imageUrl}
+        />
+    );
+</pre>
+* src속성에 user.imageUrl 변수의 값을 전달하여 이미지의 경로를 설정하고있다
+
+
+
 # 3월 20일 3주차 수업내용
 ## 수강 내용
 ### React 초기 모듈 설명

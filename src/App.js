@@ -1,25 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
+import MyB from './MyButton';
+import { Button1, Button3 } from './ButtonLib';
+import AboutPage from './AboutPage';
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Hello React</h1>
+      <MyB /><br/>
+      <Button1 />&nbsp;
+      <Button3 />
+      <AboutPage />
     </div>
   );
 }
 
-export default App;
