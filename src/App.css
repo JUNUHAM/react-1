@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+.wrapper{
+  display: grid;
+  place-items: center;
+  background-color: #61dafb;
+}
+
+.ShoppingList{
+  border: solid 1px yellow;
+}
