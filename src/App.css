@@ -40,9 +40,17 @@
 .wrapper{
   display: grid;
   place-items: center;
-  background-color: #61dafb;
+  background-color: #8b008b;
+  width: 50%;
+  margin: auto;
+  text-align: center;
 }
 
 .ShoppingList{
   border: solid 1px yellow;
+}
+
+.container{
+  width: 50%;
+  float: left;
 }

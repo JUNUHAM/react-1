@@ -19,6 +19,60 @@
 * 이름은 자유롭게 지정할수있으나 보통 [ex, setEx] 형식으로 작성하는것이 일반적이다
 * 즉 변수이름과 변수 이름 앞에 set을 붙인 업데이트 함수를 관용적으로 사용한다
 
+### HOOK사용하기
+* use로 시작하는 함수를 HOOK이라고 한다
+* useState는 React에서 제공하는 내장 HOOK이다
+* 다른 내장 HOOK는 API참고서에서 찾아볼수 있다
+* 또한 기존의 것들을 조합하여 자신의 HOOK을 작성할수도 있다
+
+* HOOK은 다른 함수보다 더 제한적이다
+* component 또는 다른 hook의 상단에서만 hook을 호출할수가 있다
+* 조건이나 반복에서 useState를 사용하고 싶다면 새 컴포넌트를 추출하여 그곳에 넣으면 된다
+
+* HOOK은 react의 렌더링 및 상태 관리 메커니즘과 밀접하게 연결되어 있으며 아래와 같은 규칙을 따라야함
+> 최상위에서만 사용하여야함
+>> if, for, while등의 블록내부에서 hook을 호출하면 안됨(함수의 조건문 내부에서 호출하면 실행순서가 달라질수 있기때문)
+
+### 왜 이런 규칙을 따라야하는가?
+react의 동작을 예측 가능하고 안정성을 높이기 위해 필요한 규칙이다
+
+1. rendering 순서를 보장하기 위해
+* 조건문이나 반복문에서 hook을 사용하면 매 rendering마다 hook의 호출순서가 달라질수있기에 react가 상태를 제대로 추적할수가 없다
+2. 불필요한 사이드 이펙트 방지
+
+### 왜 function형 컴포넌트만 hook을 사용하는가?
+* class형 컴포넌트는 lifecycle함수를 통해 상태관리를 하여왔다
+* 그런이유 때문에 class형 component는 유지보수가 어려웠다
+* react팀에서 function형 컴포넌트를 지향함
+
+### function VS class
+* 왜 요즘은 func component를 더 많이 사용할까?
+* react의 역사를 찾아보면 그 이유를 알수있다
+
+1. react 초창기
+* 함수형 컴포넌트가 존재는하였으나 단순이 props를 받아 반환하는 역할만 가능했다
+* 상태나 생명주기 기능이 없음<br> ㄴ 그래서 주요 component는 주로 class로 작성됨
+2. hook도입
+* useState의 도입으로 함수형을 사용을 권장함
+3. react17 이후
+* 사실상 func component가 표준이 됨
+
+### Component간 데이터 공유
+* 위에서 변수는 count하나인데 버튼 3개가 모두 다른 state를 가지게 되는것인가에 대한 의문이 존재함
+* 각각의 CountState com는 독립적인 count가 있는것처럼 동작하였고 각 버튼을 클릭하면 각각 증가함
+* 그러나 이것은 이상한것이 아님 각 component 객체가 독립적으로 동작하는것이기 때문
+
+
+### TIC-TAC-TOE 게임 만들기
+* tutorial에서 학습할내용
+
+1. 환경설정 : 개발환경설명
+2. 개요 : react의 핵심인 compoenet, props, state 학습
+3. 게임 완료하기 : react개발에서 많이 사용되는 기술 학습
+4. Time-line : react만의 강점에 대해 더 깊은 통찰력 얻기 가능
+
+
+
 # 3월 27일 4주차 수업내용
 ## 수강내용
 ### Component의 생성 및 nesting(중첩)
