@@ -5,6 +5,7 @@ import { Button1, Button3 } from './ButtonLib';
 import AboutPage from './AboutPage';
 import Profile from './Profile';
 import ShoppingList from './ShoppingList';
+import CountState from './CountState';
 
 export default function App() {
   return (
@@ -16,6 +17,9 @@ export default function App() {
       <AboutPage />
       <Profile />
       <ShoppingList/>
+      <CountState />
+      <CountState />
+      <CountState />
     </div>
   );
 }

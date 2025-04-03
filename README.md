@@ -1,5 +1,24 @@
 # 함준우 202130334
 
+# 4월 3일 5주차 내용
+## 수강내용
+### 이벤트 응답
+* component 내부에 event handler 함수를 선언하면 evenet에 응답할수 있다
+* onClick=[handleClick]의 끝에 ()가 없다
+* 함수를 호출하지 않고 전달만 하면 된다
+* react는 사용자가 버튼을 클릭할 때 이벤트 핸들러를 호출 한다
+
+### 화면 업데이트
+* component가 특정 정보를 기억해 두었다가 표시하기를 원하는 경우가 있다
+* 예를들어 버튼이 클릭된 횟수를 카운트하고 싶은경우에 component에 state를 추가하면 된다
+<pre>import {useState} from 'react';</pre>
+* 이 코드를 보면 useState는 react파일안에 named Export로 선언되어있는 여러 개의 component중 하나라는것을 알수가 있다
+* 이제 component내부에 state변수를 선언할수 있다
+<pre>function MyButton(){<br>const [count, setCount] = useState(0);<br>//..</pre>
+* useState로 부터 현재의 state를 저장할수 있는 변수인 count와 이를 업데이트 할수 있는 함수인 setCount를 얻을수 있다
+* 이름은 자유롭게 지정할수있으나 보통 [ex, setEx] 형식으로 작성하는것이 일반적이다
+* 즉 변수이름과 변수 이름 앞에 set을 붙인 업데이트 함수를 관용적으로 사용한다
+
 # 3월 27일 4주차 수업내용
 ## 수강내용
 ### Component의 생성 및 nesting(중첩)
