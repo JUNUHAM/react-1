@@ -1,4 +1,140 @@
 # 함준우 202130334
+# 4월 17일 7주차 내용
+## 수강내용
+### JS Slice 문법 설명
+* Array.slice(n)
+* property가 하나인 slice()경우 배열의 n행부터 출력을함
+* property가 두개인 slice()경우는 첫번째 n이 출력시작 n행 두번째 n의 전 행까지 출력을 한다
+```
+예시
+    const animal[] = {'ant','rabbit','turtle','lion','zebrea','tiger'}
+    console.log(Array.Slice(2,5));
+
+    ========== 출력 ===========
+    rabbit, turtle, lion, zebra
+```
+
+### Tic Tac Toe
+```
+function handleClick(i) {
+ const nextSquares = squares.slice();
+ nextSquares[i] = "X";
+ setSquares(nextSquares);
+}
+
+이 다음 인수 i를 handleClick에 전달해야함 Square의 onSquareClick prop를 JSX에서 직접 handleClick으로 전달할수도 있으나
+
+이 방법은 작동하지 않음
+<Square value={squares[0]} onSquareClick={handleClick(0)} />
+
+이유
+다음과 같이 handleClick(0)의 호출은 Board의 렌더링의 일부가 됨
+handleClick은 setSquares를 호출하여 보드컴포넌트의 state를 변경시키기에
+보드 컴포넌트 자체가 다시 렌더링이 됨 하지만 이 과정에서 또 handleClick이 다시 호출되어서
+무한루프가 발생함
+```
+* 왜 이런 문제가 발생하였는가?
+```
+이전에 onSquareClick={handleClick} 은 함수를 호출한것이 아닌 handleClick함수를 prop으로 전달을 함
+하지만 지금은 handleClick(0)을 보면 알듯이 해당 함수를 직접 호출하여서 너무 빨리 함수를 호춯하고 있음
+사용자가 클릭하기 전까지는 함수가 호출이 되면 안됨
+
+이 문제 해결을 위해 handleClick(0)을 호출하는 handleClickSquareClick함수를 만들고 handleClick(1)을
+호출하는 함수 handleClickSquareClick함수를 만들고 하면 되지만
+
+9개의 서로다른 함수를 정의하고 불러오고 하면 너무 장황하니 () => 함수를 사용하여 코드를 리팩토링함
+```
+
+1. 사용자가 Board의 왼쪽 위 Square를 클릭하면 button이 Square로 부터 onClick prop으로 받은 함수가 실행이 됨
+    * Square컴포넌트는 Board에서 해당 함수를 onSquareClick prop으로 받음
+    * Board는 jsx에서 해당 함수를 직접 정의함
+    * 이 함수는 0을 인수로 handleClick을 호출함
+2. handleClick은 인수 0을 사용해 Square 배열의 첫번째 엘리먼트를 null에서 x로 업데이트함
+3. Board 컴포넌트의 Square state가 업데이트 되어 Board와 그 모든 자식이 모두 다시 렌더링 됨 이에 따라 인덱스가 0인 Square의 컴포넌트의 value prop가 null 에서 X로 변경됨
+
+
+### 불변성이 중요한 이유
+```
+일반적으로 데이터를 변경하는 방법은 두가지가 있다
+1. 데이터의 값을 직접 변경하는 방법
+2. 원하는 변경사항이 있는 새 복사본으로 데이터를 대체하는것
+
+예시 : 
+    데이터의 값을 직접 변경
+    const squares = [null, null, null, null, null, null, null, null, null];
+    squares[0] = 'X';
+// Now `squares` is ["X", null, null, null, null, null, null, null, null];
+
+예시 :
+    복사본으로 데이터 대체
+    const squares = [null, null, null, null, null, null, null, null, null];
+    const nextSquares = ['X', null, null, null, null, null, null, null, null];
+// Now `squares` is unchanged, but `nextSquares` first element is 'X' rather than `null`
+```
+<b>사용하면 좋은이유</b>
+
+1. 불변성을 사용하면 복잡한 기능을 훨씬 쉽게 구현이가능
+2. 불변성을 사용하는 것의 또다른 장점이 있음
+> * 기본적으로 부모 컴포넌트의 state가 변경되면 모든 자식 컴포넌트가 자동으로 다시 렌더링이 됨
+> * 변경사항이 없는 자식 컴포넌트도 렌더링이됨
+> * 리렌더링 자체가 사용자에게 보이는것은 아니나 성능상의 이유로 트리의 영향을 받지않는 부분의 리렌더링은 피하는것이 좋음
+> * 불변성을 사용하면 컴포넌트가 데이터의 변경 여부를 저렴한 비용으로 판단할수가 있음
+
+### TIC TAC TOE 교대로 변경하는 기능 구현
+* 현재까지 만든 게임중 가장 큰 결함은 O를 보드에 표시할수가 없다는 문제였음
+* 첫번째가 두는 말은 X로 설정하고 이제 보드 컴포넌트에 새로운 state를 추가하여 추적해 보겠다
+
+### return 값이 없는 return?
+* JS에서 return 값이 없는 return은 함수를 즉시 종료하라는 의미임
+* 이때 값을 지정해주지 않으면 undefined가 반환됨
+
+### TIC TAC TOE 승자 결정하기
+* 이제 차례를 표시했으니 게임의 승자가 나오면 더이상 차례를 만들 필요가 없는것도 표시해야함
+* 이를위해 9개의 사각형 배열을 가져와서 승자를 확인하고 적절하게 X, O, NULL을 반환하는 함수를 추가해야함
+
+### 구조 분해 할당 (Destructuring Assignment)
+* 비구조화 할당, 구조화 할당이라도 함
+* 구조 분해 할당은 배열이나 객체의 구조를 해체해 내부 값을 개별 변수에 쉽게 할당하는 기법임
+* 이를통해 코드의 간결성과 가독성을 올릴수 있다
+* map함수에서도 활용하는 많이 사용하는 기법임
+
+```
+const palrs = [
+    [1,2],
+    [3,4],
+    [5,6]
+]
+
+palrs.map([x,y]) => {
+    console.log(`x: $[x], y: $[y]`);
+}
+```
+
+### 타임머신 만들기
+* Play History만들기
+* Square배열을 직접 업데이트 하면 시간여행을 구현하는것은 매우 힘들것임
+* 우리는 slice()를 사용해서 플레이어가 클릭할때마다 square 배열의 새 복사본을 만들고 불변처리함
+* 이에 배열의 모든 과거버전을 저장할수있었고 이미 발생한 플레이의 내용을 탐색할수도 있다
+* 과거의 square 배열을 history라는 배열에 저장하고 이 배열을 새로운 state로 저장함
+* history배열은 첫번째 플레이부터 마지막 플레이까지 모든 보드 state를 나타내며 다음과 같은 모양을 가짐
+```
+[
+  // Before first move
+  [null, null, null, null, null, null, null, null, null],
+  // After first move
+  [null, null, null, null, 'X', null, null, null, null],
+  // After second move
+  [null, null, null, null, 'X', null, null, null, 'O'],
+  // ...
+]
+```
+
+* 이제 과거 플레이 목록을 표시하기 위해 새로운 최상위 컴포넌트 game을 작성
+* 여기에 전체 게임 기록을 포함하는 history state를 배치
+* history state를 game 컴포넌트에 배치하면 자식 board 컴포넌트에서 square state를 제거 할수 있음
+* square컴포넌트에서 board컴포넌트로 state를 끌어욜렸던 것처럼, 이제 board컴포넌트에서 최상위 game컴포넌트로 state를 끌어올릴수있음
+* 이렇게 하면 game 컴포넌트가 board컴포넌트의 데이터를 완전히 제어하고 board의 history에서 이전순서를 렌더링하는것을 지시할수있음
+
 # 4월 10일 6주차 내용
 ## 수강내용
 ### TIC-TAC-TOE 게임 만들기
@@ -22,6 +158,13 @@
 * 부모 컴포넌트는 props를 통해 해당 state를 자식 컴포넌트에 전달하는게 가능함
 이러면 자식 컴포넌트가 서로 동기화되고 부모 컴포넌트와도 동기화되도록 유지하는것이 가능
 
+### fill() 설명
+```
+    Array(n).fill(0,2,4) 구문설명
+    n개 배열에 2번배열부터 4번배열까지 0값을 배열에 넣어라
+    Array(9).fill(null)
+    9개배열에 모든 값을 null로 하여라
+```
 
 # 4월 3일 5주차 내용
 ## 수강내용

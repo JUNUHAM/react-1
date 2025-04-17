@@ -1,11 +1,11 @@
 import './App.css';
-import Board from './Board.js'
+import Game from './Game.js'
 
 function App() {
   return (
     <div className="App">
       <h1>TIC TAC TOE</h1>
-      <Board/>
+      <Game/>
     </div>
   );
 }

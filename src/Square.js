@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 function Square({value, onSquareClick}) {
     /**
    * TODO : 버튼 및 클릭 이벤트 리스너 구현
