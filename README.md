@@ -1,4 +1,26 @@
 # 함준우 202130334
+# 4월 10일 6주차 내용
+## 수강내용
+### TIC-TAC-TOE 게임 만들기
+* tutorial에서 학습할내용
+
+1. 환경설정 : 개발환경설명
+2. 개요 : react의 핵심인 compoenet, props, state 학습
+3. 게임 완료하기 : react개발에서 많이 사용되는 기술 학습
+4. Time-line : react만의 강점에 대해 더 깊은 통찰력 얻기 가능
+
+### Props를 통한 데이터전달
+* react의 component architecture를 사용해 재사용가능한 component를 만들어 사용함
+
+### state 끌어올리기
+* 현재 각 Square Component는 게임 state의 일부를 기억함
+* 게임에서 승자를 판별하려면 Board가 9개의 square 내부의 state를 기억하고 있어야함
+* Board가 각각의 Square에 state에 요청을 한다고 가정하면
+* 기술적으로는 가능하나 공식문서에서 자중을 요청
+
+* 가장좋은방법은 부모요소에서 공유 state를 선언하는 방법이 존재함
+* 부모 컴포넌트는 props를 통해 해당 state를 자식 컴포넌트에 전달하는게 가능함
+이러면 자식 컴포넌트가 서로 동기화되고 부모 컴포넌트와도 동기화되도록 유지하는것이 가능
 
 # 4월 3일 5주차 내용
 ## 수강내용
