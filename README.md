@@ -1,4 +1,110 @@
 # 함준우 202130334
+# 4월 18일 8주차 보강
+## 수강내용
+### State 끌어올리기
+* 보드 컴포넌트가 xIsNext, Square, onPlay 함수를 prop으로 받을수 있게하고
+* * onPlay는 보드가 업데이트 된 square를 배열로 호출할수 있게 해주는 함수
+
+* 보드에서 state요청하는 구문 제거
+
+* 보드 컴포넌트는 game컴포넌트가 전달한 props에 의해 완전히 제어됨
+* 게임이 작동하게 하려면 game컴포넌트에서 handlePlay 함수를 구현해야 함
+* handlePlay 호출시 기능은
+* * 이전에 보드는 업데이트된 setSquare를 호출했으나 이제는 업데이트된 square배열을 onplay로 전달함
+* handlePlay는 리렌더링을 트리거 하기위해 game의 state를 업데이트 해야하나 더이상 호출받을수 없는 setSquare함수가 없으며 대신 이정보를 저장하기 위해 history state변수를 사용하고 있음 업데이된 square배열을 새 히스토리로 추가하여  history를 업데이트 해주어야 하며 Board에서 했던것처럼 xIsNext의 값을 반전시켜 주어야함
+
+### 전개 구문 ...
+* 배열이나 문자열등 반복가능한 객체를 개별 요소로 펼처서 사용할수있게 해주는 문법
+* 예시 : 함수 인자 출력
+```
+function sum(a,b,c){
+    return a+b+c;
+}
+
+const number = [10,20,30];
+const result = sum(...number); //number배열 내부 요소 10,20,30을 개별요소로 펼처 a,b,c에 대입
+console.log(result);
+// return 60
+```
+
+### 과거 움직임 보여주기
+* 이제 히스토리를 기록하기 때문에 과거 플레이 목록을 보여줄수 있다
+* 버튼과 같은 react 엘리먼트는 일반 js 객체이므로 어플리케이션에서 전달할수 있다
+* 여러 엘리먼트를 렌더링하려면 react 엘리먼트 배열을 사용할수 있다
+* state에 이동 history 배열이 있기에 이것을 react 엘리먼트 배열로 변환하여야 한다
+* js에서 한 배열을 다른 배열로 변환 하려면 배열 map 함수를 사용하여 변환할수 있다
+```
+[1,2,3].map((x) => x * 2) //[2,4,6]
+```
+
+### Map함수
+* map의 기본 구문은 map(callBackFn) 혹은 map(callBackFn, thisArg)이다
+* thisArg는 내부에서 this로 사용할 값을 지정하는데 화살표 함수에선 생략이됨
+* 따라서 예제에서는 callbackFn만 사용하고 화살표 함수가 callbackFn를 대체함
+* square, move는 화살표함수의 매개변수임
+1. history.map : history는 모든 플레이를 저장하는 배열로 이 history에 map함수를 적용하겠다는 구문
+2. map 함수는 history 각각의 요소 index를 순회하며 square를 추출해냄
+3. 각 요소는 { }을 실행하며 버튼을 생성함
+4. 생성된 버튼은 moves객체에 다시 저장이됨
+5. move는 최종 rendering에 사용됨
+
+#### 재정리
+```
+const moves = history.map((square, move) => {})
+```
+- 원본 배열 (history) : map이 호출된 원본 배열
+- 인덱스 (move) : 현재 순환중인 원본 배열 요소의 인덱스
+- 요소 (square) : 현재 순환중인 요소 배열의 값 
+
+### Key 선택하기
+* 리스트를 렌더링할때 react는 렌더링 된 각 리스트 항목에 대한 몇 가지 정보를 저장함
+* 리스트를 업데이트할때 react는 무엇이 변경되었는지 확인해야함
+* 리스트의 항목은 추가, 제거, 재정렬 또는 업데이트 될수 있음
+* 리스트가 다음과 같이 업데이트 되었다고 가정할때
+```
+<li>Alexa: 7 takes left</li>
+<li>Ben: 5 takes left</li>
+```
+* UPDATE
+```
+<li>Ben: 9 takes left</li>
+<li>Cludia: 8 takes left</li>
+<li>Alexa: 5 takes left</li>
+```
+
+* 만약 데이터 베이스에서 데이터를 불러와서 사용한다면 DB의 ID를 KEY로 사용할수 있다
+* 리스트가 다시 렌더링 되면 REACT는 각 리스트 항목의 KEY를 가져와 이전 리스트의 항목에서 일치하는 KEY를 탐색함
+* 현재 리스트에서 이전에 존재하지 않았던 KEY가 있으면 REACT는 컴포넌트를 생성함
+* 만약 현재 리스트에서 이전 리스트에 존재했던 KEY를 가지고있지 않다면 REACT는 그 KEY를 가진 컴포넌트를 제거함
+* 두 KEY가 일치한다면 해당 컴포넌트는 이동함
+* KEY는 특별하게 미리 지정된 프로퍼티임
+* 엘리먼트가 생성되면 반환되는 엘리먼트에 직접 KEY를 지정함
+* KEY가 prop으로 전돨되는 것 처럼 보일수 있으나 react는 자동으로 key를 사용해 업데이트할 컴포넌트를 결정함
+* 부모가 지정한 key가 무엇인지 컴포넌트는 모름
+* 동적인 리스트를 만들 때마다 적절한 key를 할당하는 것을 강력히 추천함
+* 적절한 key가 없는경우 데이터 재구성 추천
+* key가 지정되지 않은경우 react는 경고를 출력하며 배열의 인덱스를 기본 key로 사용함
+* 배열 인덱스를 key로 사용하면 리스트항목의 순서를 바꾸거나 항목을 추가, 제거할때 문제가 발생함
+* 명시적으로 key={i}를 전달하면 경고는 사라지나 배열의 인덱스를 사용할때와 같은 문제가 발생하므로 추천하지 않음
+
+
+### 시간 여행 구현하기 - 1
+* 틱택토 게임의 기록에서 과거의 각 플레이어에는 해당 플레이의 일련번호인 고유 id가 있다
+* 중간에 순서를 바꾸거나 삭제하거나 삽입할수가 없기때문에 인덱스를 key로 사용하는것이 안전함
+* game 함수에서 li key={move}로 추가할수 있으며 렌더링 된 게임을 리렌더링하면 오류가 사라짐
+
+### 시간여행 구현하기 - 2 
+* jumpTo를 구현하기 전에 사용자가 현재 어떤 단계를 보고있는지를 추적할수있는 state가 하나 더 필요함
+* 초기값이 0인 currentMove라는 새 state변수를 정의함
+* jumpTo함수를 수정하여 currentMove를 업데이트
+* currentMove를 변경하는 숫자가 짝수라면 xIsNext를 true로 설정함
+* 이제 handlePlay 함수 내용중 두가지를 변경함
+* 새로운 플레이를 하는 경우 해당 시점까지의 히스토리만 유지해야함
+* * history의 모든 항목 뒤에 nextSquare를 추가하는 대신 <br> history.slice(0, currentMove + 1)의 모든 항목 뒤에 추가하여 이전 히스토리의 해당 부분만 유지하도록 함
+* 이동할때마다 최신 히스토리 항목을 가리키도록 currentMove를 업데이트
+
+
+
 # 4월 17일 7주차 내용
 ## 수강내용
 ### JS Slice 문법 설명
@@ -21,20 +127,21 @@ function handleClick(i) {
  nextSquares[i] = "X";
  setSquares(nextSquares);
 }
-
+```
 이 다음 인수 i를 handleClick에 전달해야함 Square의 onSquareClick prop를 JSX에서 직접 handleClick으로 전달할수도 있으나
 
 이 방법은 작동하지 않음
+```
 <Square value={squares[0]} onSquareClick={handleClick(0)} />
-
+```
 이유
 다음과 같이 handleClick(0)의 호출은 Board의 렌더링의 일부가 됨
 handleClick은 setSquares를 호출하여 보드컴포넌트의 state를 변경시키기에
 보드 컴포넌트 자체가 다시 렌더링이 됨 하지만 이 과정에서 또 handleClick이 다시 호출되어서
 무한루프가 발생함
-```
+
 * 왜 이런 문제가 발생하였는가?
-```
+
 이전에 onSquareClick={handleClick} 은 함수를 호출한것이 아닌 handleClick함수를 prop으로 전달을 함
 하지만 지금은 handleClick(0)을 보면 알듯이 해당 함수를 직접 호출하여서 너무 빨리 함수를 호춯하고 있음
 사용자가 클릭하기 전까지는 함수가 호출이 되면 안됨
@@ -43,7 +150,7 @@ handleClick은 setSquares를 호출하여 보드컴포넌트의 state를 변경�
 호출하는 함수 handleClickSquareClick함수를 만들고 하면 되지만
 
 9개의 서로다른 함수를 정의하고 불러오고 하면 너무 장황하니 () => 함수를 사용하여 코드를 리팩토링함
-```
+
 
 1. 사용자가 Board의 왼쪽 위 Square를 클릭하면 button이 Square로 부터 onClick prop으로 받은 함수가 실행이 됨
     * Square컴포넌트는 Board에서 해당 함수를 onSquareClick prop으로 받음
@@ -462,6 +569,9 @@ dependencies : 실제 코드에서 사용하는 라이브러리
 >.gitignore : git에 추가하지 않을 파일 목록 정의<br>
 >package-lock.json : 설치된 패키지의 정확한 버전이 기록된 파일<br>
 >README.md : 프로젝트 설명문서<br>
+
+* * *
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
