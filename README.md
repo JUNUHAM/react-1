@@ -1,3 +1,26 @@
+### 최소한의 데이터만 사용하여 UI state 표현하기
+* UI를 상호작용하게 만드려면 사용자가 기반 데이터 모델을 변경할수 있게 하여야함
+* state를 통하여 기반 데이터 모델을 변경할수 있게함
+
+* state는 앱이 기억하여야 하는 변경할수 있는 데이터의 최소 집합
+* state를 구조화 하는데 가장 중요한 원칙은 중복배제원칙(Don't Repeat Yourself) 임
+* 앱이 필요로 하는 가장 최소한의 state를 파악하고 나머지 모든것들은 필요에 다라 실시간으로 계산
+* ex. 쇼핑리스트의 경우 배열에 상품 아이템을 넣을것임
+* UI에 상품 아이템의 개수를 노출하고 싶다면 상품아이템의 개수를 따로 state값으로 가지는게 아니라 단순하게 배열의 길이만 쓰면 됨
+
+* product앱은 다음과 같은 데이터를 가지고 있다
+> 1. 제품의 원본 목록
+> 2. 사용자가 입력한 검색어
+> 3. 체크박스의 값
+> 4. 필터링된 제품 목록
+
+* 이중 어떤게 state가 되어야 하는지는 3가지의 질문을 통해 정할수있다
+1. 시간이 지나도 변하지 않음 -> state가 아님
+2. 부모로 부터 props로 전달이 되는가? -> state가 아님
+3. 컴포넌트 내부의 다른 state나 props를 가지고 계산이 가능한가? -> state가 아님
+
+* 이외는 state임
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
